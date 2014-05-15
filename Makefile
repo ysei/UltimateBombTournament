@@ -4,7 +4,7 @@ OBJ=		$(SRC:.cpp=.o)
 
 NAME=		ubt
 
-FLAGLIB=	-lsfml-graphics -lsfml-window -lsfml-system -lGL -ljpeg
+FLAGLIB=	-lsfml-graphics -lsfml-window -lsfml-system -lGL -lGLU -lGLEW 
 FLAGERR=	-Wall -Werror -Wextra
 
 $(NAME):	$(OBJ)
