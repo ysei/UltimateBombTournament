@@ -1,5 +1,4 @@
 #include <iostream>
-#include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Config.hpp>
@@ -8,32 +7,22 @@
 #include <SFML/Window.hpp>
 #include <SFML/Network.hpp>
 #include <SFML/OpenGL.hpp>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
- 
+#include <GL3/gl3.h>
+
 int                     main()
 {
+  sf::ContextSettings settings;
+  settings.depthBits = 32;
+  settings.majorVersion = 3;
+  settings.minorVersion = 3;
+  sf::RenderWindow window(sf::VideoMode(900,900), "OpenGL", sf::Style::Close, settings); 
   bool                  running = true;
-  float                 vertices[] = {-0.5, -0.5,   0.0, 0.5,   0.5, -0.5};
+  float                 vertices[] = {-0.5, -0.5, 0.0, 0.5, 0.5, -0.5};
   sf::Event             event;
-  sf::ContextSettings   settings;
-  sf::RenderWindow      window(sf::VideoMode(900,900), "OpenGL", sf::Style::Close, sf::ContextSettings(32));
-  sf::Shader            shader;
   
+  settings.majorVersion = 3;
+  settings.minorVersion = 3;
   window.setVerticalSyncEnabled(true);
-
-
-      glClearDepth(10);
-      glClearColor(0, 0, 0, 0);
-
-      glEnable(GL_DEPTH_TEST);
-      glDepthMask(GL_TRUE);
-
-      glMatrixMode(GL_PROJECTION);
-      glLoadIdentity();
-      gluPerspective(90, 1, 1, 500);
-
   while (running)
     {
       window.clear();
@@ -47,20 +36,14 @@ int                     main()
 	      std::cout << "Space pressed" << std::endl;
             }
         }
- 
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);      
-      glBegin(GL_QUADS);
-
-      glVertex3f(-1, -1, -1);
-      glVertex3f(-1,  1, -1);
-      glVertex3f( 1,  1, -1);
-      glVertex3f( 1, -1, -1);
-
-      glEnd();
-
+      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+      glEnableVertexAttribArray(0);
+      glDrawArrays(GL_TRIANGLES, 0, 3);
+      glDisableVertexAttribArray(0);
+      window.pushGLStates();
+      window.popGLStates();
       window.display();
-
-
     }
   return 0;
 }
