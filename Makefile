@@ -1,10 +1,13 @@
-SRC=		main.cpp
+SRC=		main.cpp	\
+		Map.cpp		\
+		Cube.cpp	\
+		Shader.cpp
 
 OBJ=		$(SRC:.cpp=.o)
 
 NAME=		ubt
 
-FLAGLIB=	-lsfml-graphics -lsfml-window -lsfml-system -lGL -lGLU -lGLEW 
+FLAGLIB=	-lSDL2 -lGL -lGLU
 FLAGERR=	-Wall -Werror -Wextra
 
 $(NAME):	$(OBJ)
